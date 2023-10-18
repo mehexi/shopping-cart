@@ -1,7 +1,9 @@
 const Phn = document.getElementById("item-price");
+const phnCase = document.getElementById('phnCase')
+const totalElement = document.getElementById('totalElement')
 
-function updateCaseNumber(isIncrese) {
-  const caseNumberFiled = document.getElementById("item-input");
+function updateCaseNumber(isIncrese, inputName) {
+  const caseNumberFiled = document.getElementById(inputName);
   const caseNumber = parseInt(caseNumberFiled.value);
 
   let newCaseNumber;
@@ -16,18 +18,40 @@ function updateCaseNumber(isIncrese) {
   return newCaseNumber;
 }
 
-function phnNumber(newCaseNumber) {
-  const phnText = newCaseNumber * 1291;
-  Phn.innerText = phnText;
+function phnNumber(newPhnNumber) {
+  const phnText = newPhnNumber * 1291;
+    Phn.innerText = phnText;
+    calculateTotal()
+}
+function caseNumber(newCaseNumber) {
+  const caseText = newCaseNumber * 59;
+    phnCase.innerText = caseText;
+    calculateTotal()
 }
 
-document.getElementById("value-plus").addEventListener("click", function() {
-  const newCaseNumber = updateCaseNumber(true);
+document.getElementById("phn-plus").addEventListener("click", function() {
+  const newPhnNumber = updateCaseNumber(true, "item-input");
 
-  phnNumber(newCaseNumber);
+  phnNumber(newPhnNumber);
 });
 
-document.getElementById("value-minus").addEventListener("click", function() {
-  const newCaseNumber = updateCaseNumber(false);
-  phnNumber(newCaseNumber);
+document.getElementById("phn-minus").addEventListener("click", function() {
+  const newPhnNumber = updateCaseNumber(false , "item-input");
+  phnNumber(newPhnNumber);
 });
+document.getElementById("case-minus").addEventListener("click", function() {
+  const newCaseNumber = updateCaseNumber(false, "case-input");
+  caseNumber(newCaseNumber);
+});
+document.getElementById("case-plus").addEventListener("click", function() {
+  const newCaseNumber = updateCaseNumber(true, "case-input");
+  caseNumber(newCaseNumber);
+});
+
+function calculateTotal() {
+    const phnTotal = parseInt(Phn.innerText) 
+    const caseTotal = parseInt(phnCase.innerText) 
+    const total = phnTotal + caseTotal;
+    totalElement.innerText = total;
+    return total
+  }
